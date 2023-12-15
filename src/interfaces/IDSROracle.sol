@@ -14,6 +14,12 @@ interface IDSROracle {
     }
 
     /**
+     * @notice Emitted when the PotData is updated.
+     * @param nextData The new PotData struct.
+     */
+    event SetPotData(PotData nextData);
+
+    /**
      * @notice Retrieve the current PotData: dsr, chi, and rho.
      * @return The current PotData struct.
      */
