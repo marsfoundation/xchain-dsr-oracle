@@ -1,17 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 pragma solidity ^0.8.0;
 
-import "./DSROracleXChainIntegrationBase.t.sol";
-
 import { OptimismDomain } from "xchain-helpers/testing/OptimismDomain.sol";
 
-import { DSROracleForwarderOptimism } from "../src/forwarders/DSROracleForwarderOptimism.sol";
-import { DSROracleReceiverOptimism }  from "../src/receivers/DSROracleReceiverOptimism.sol";
+import { DSROracleForwarderOptimism } from "src/forwarders/DSROracleForwarderOptimism.sol";
+import { DSROracleReceiverOptimism }  from "src/receivers/DSROracleReceiverOptimism.sol";
+
+import "./DSROracleXChainIntegrationBase.t.sol";
 
 contract DSROracleIntegrationOptimismTest is DSROracleXChainIntegrationBaseTest {
 
     DSROracleForwarderOptimism forwarder;
-    DSROracleReceiverOptimism receiver;
+    DSROracleReceiverOptimism  receiver;
 
     function setupDomain() internal override {
         remote = new OptimismDomain(getChain('optimism'), mainnet);
@@ -23,8 +23,9 @@ contract DSROracleIntegrationOptimismTest is DSROracleXChainIntegrationBaseTest 
 
         remote.selectFork();
 
-        oracle = new DSRAuthOracle();
+        oracle   = new DSRAuthOracle();
         receiver = new DSROracleReceiverOptimism(address(forwarder), oracle);
+        
         oracle.grantRole(oracle.DATA_PROVIDER_ROLE(), address(receiver));
 
         assertEq(address(receiver), expectedReceiver);

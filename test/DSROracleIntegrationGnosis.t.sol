@@ -1,19 +1,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 pragma solidity ^0.8.0;
 
-import "./DSROracleXChainIntegrationBase.t.sol";
-
 import { GnosisDomain } from "xchain-helpers/testing/GnosisDomain.sol";
 
-import { DSROracleForwarderGnosis }  from "../src/forwarders/DSROracleForwarderGnosis.sol";
-import { DSROracleReceiverGnosis } from "../src/receivers/DSROracleReceiverGnosis.sol";
+import { DSROracleForwarderGnosis } from "src/forwarders/DSROracleForwarderGnosis.sol";
+import { DSROracleReceiverGnosis }  from "src/receivers/DSROracleReceiverGnosis.sol";
+
+import "./DSROracleXChainIntegrationBase.t.sol";
 
 contract DSROracleIntegrationGnosisTest is DSROracleXChainIntegrationBaseTest {
 
     address constant AMB = 0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59;
 
     DSROracleForwarderGnosis forwarder;
-    DSROracleReceiverGnosis receiver;
+    DSROracleReceiverGnosis  receiver;
 
     function setupDomain() internal override {
         remote = new GnosisDomain(getChain('gnosis_chain'), mainnet);
@@ -24,8 +24,9 @@ contract DSROracleIntegrationGnosisTest is DSROracleXChainIntegrationBaseTest {
 
         remote.selectFork();
 
-        oracle = new DSRAuthOracle();
+        oracle   = new DSRAuthOracle();
         receiver = new DSROracleReceiverGnosis(AMB, 1, address(forwarder), oracle);
+
         oracle.grantRole(oracle.DATA_PROVIDER_ROLE(), address(receiver));
     }
 
