@@ -18,7 +18,7 @@ contract DSROracleIntegrationOptimismTest is DSROracleXChainIntegrationBaseTest 
 
         mainnet.selectFork();
 
-        address expectedReceiver = computeCreateAddress(address(this), 5);
+        address expectedReceiver = vm.computeCreateAddress(address(this), 5);
         forwarder = new DSROracleForwarderOptimism(address(pot), expectedReceiver);
 
         remote.selectFork();

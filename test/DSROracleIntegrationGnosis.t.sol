@@ -20,7 +20,7 @@ contract DSROracleIntegrationGnosisTest is DSROracleXChainIntegrationBaseTest {
 
         mainnet.selectFork();
 
-        forwarder = new DSROracleForwarderGnosis(address(pot), computeCreateAddress(address(this), 5));
+        forwarder = new DSROracleForwarderGnosis(address(pot), vm.computeCreateAddress(address(this), 5));
 
         remote.selectFork();
 
